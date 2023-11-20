@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -22,8 +22,7 @@ public class Main {
                 scanner.next();
             } catch (IllegalArgumentException e) {
                 System.out.println(e);
-                throw e;
-            
+                //throw e;
             }
         }
 
@@ -39,8 +38,7 @@ public class Main {
                 scanner.next();
             } catch (IllegalArgumentException e) {
                 System.out.println(e);
-                 //Re throwing
-                throw e;
+              //throw e;
             }
         }
 
@@ -58,18 +56,13 @@ public class Main {
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Exception: Must be an integer");
-                    System.out.println(e);
                     scanner.next();
-                    //  //Re throwing
-                    throw e;
                 } catch (IllegalArgumentException e) {
                     System.out.println(e);
-                    //Re throwing
-                    throw e;
-                    
-                } finally {
-                	scanner.close();
-                }
+                  //throw e;
+                }//finally{
+            	//scanner.close();
+            //}
             }
 
             try {
@@ -85,15 +78,15 @@ public class Main {
                 }
 
                 if (chargingStations[i] != null) {
-                    chargingStations[i].displayStationStatus(scanner, i + 1);
+                    chargingStations[i].displayStationStatus(scanner, weatherChoice);
                 }
             } catch (Exception e) {
                 System.out.println("Exception occurred during station creation: " + e.getMessage());
-                throw e;
-               
+              //throw e;
             }
         }
 
         scanner.close();
     }
 }
+
