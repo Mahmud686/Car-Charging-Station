@@ -1,5 +1,26 @@
 # Car-Charging-Station
 Simulation of the Car charging station with several alternative sources of energy. 
+Task Completion Description:
+Matriculation Number: 7216156
+Responsibilities:
+1. Develop the Location and Station configuration for the Capstone project and also the corresponding part in the Main.java file to align the Locatio.java and Station.java file
+2. Create chaining exceptions which means to relate one exception with another exception, i.e one exception describes the cause of another exception
+   Handled the wrong weather status input to implement chaining exception in Hometask 1
+3. Write the theory answers to Homeask 1 (questions no 2.1 and 2.2)
+
+
+Matriculation Number: 7219089
+Responsibilities: 
+1. Develop the Weather conditions and Energy sources configuration for the Capstone project and also the corresponding part in the Main.java file to align the scenario of the capstone project
+2. Create Resource Management exceptions in the capstone project in Hometask 1 where the scanner is closed to reduce the usage of resources.
+3. Write the theory answers to Homeask 1 (questions no 2.3 and 2.4)
+
+
+
+
+
+
+
 
 
 Answers to the questions of Home Task 1:
