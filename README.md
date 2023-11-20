@@ -25,6 +25,7 @@ Responsibilities:
    
 Marticulation Number :7219293
 Responsibilities:
+
 1.Develop the code for Rethrowing the exception for the capstone project and also the corresponding part such number of location and number of station.
 2.work basically on main class in the capstone project in hometask1
 3.also created custom exceptions.
