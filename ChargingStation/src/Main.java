@@ -22,6 +22,7 @@ public class Main {
                 scanner.next();
             } catch (IllegalArgumentException e) {
                 System.out.println(e);
+            
             }
         }
 
@@ -54,21 +55,34 @@ public class Main {
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Exception: Must be an integer");
+                    System.out.println( e.getCause());
                     scanner.next();
                 } catch (IllegalArgumentException e) {
                     System.out.println(e);
+                    
+                } finally {
+                	scanner.close();
                 }
             }
 
-            if (weatherChoice == 0) {
-                System.out.println("Switching to Solarpanel energy source.");
-                chargingStations[i] = new Station(numLocations, new SolarPanel());
-            } else if (weatherChoice == 1) {
-                System.out.println("Switching to WindTurbine energy source.");
-                chargingStations[i] = new Station(numLocations, new WindTurbine());
-            } else if (weatherChoice == 2) {
-                System.out.println("Switching to electricity energy source.");
-                chargingStations[i] = new Station(numLocations, new Electricity());
+            try {
+                if (weatherChoice == 0) {
+                    System.out.println("Switching to Solarpanel energy source.");
+                    chargingStations[i] = new Station(numLocations, new SolarPanel());
+                } else if (weatherChoice == 1) {
+                    System.out.println("Switching to WindTurbine energy source.");
+                    chargingStations[i] = new Station(numLocations, new WindTurbine());
+                } else if (weatherChoice == 2) {
+                    System.out.println("Switching to electricity energy source.");
+                    chargingStations[i] = new Station(numLocations, new Electricity());
+                }
+
+                if (chargingStations[i] != null) {
+                    chargingStations[i].displayStationStatus(scanner, i + 1);
+                }
+            } catch (Exception e) {
+                System.out.println("Exception occurred during station creation: " + e.getMessage());
+               
             }
         }
 
