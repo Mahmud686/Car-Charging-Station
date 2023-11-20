@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -56,12 +57,10 @@ public class Station {
                     throw new ChargingException("Error while taking input for charging location status", e);
                 } catch (Exception e) {
                     throw new ChargingException("Unknown error occurred while taking input for charging location status", e.getCause());
-                } finally {
-                	scanner.close();
-                }
+                }//finally{
+                	//scanner.close();
+                //}
             }
         }
     }
-
-
 }
