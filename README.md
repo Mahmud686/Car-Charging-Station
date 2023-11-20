@@ -22,9 +22,12 @@ Responsibilities:
 1. Develop the Location configuration for the Capstone project and also the corresponding part in the other files to align the scenario of the capstone project
 2. Create Multiple exceptions in the capstone project in Hometask 1 
 3. Write the theory answers to Hometask 1 (question no 2.3), and Hometask 2 (question no 2.4)
-
-
-
+   
+Marticulation Number :7219293
+Responsibilities:
+1.Develop the code for Rethrowing the exception for the capstone project and also the corresponding part such number of location and number of station.
+2.work basically on main class in the capstone project in hometask1
+3.also created custom exceptions.
 
 
 
