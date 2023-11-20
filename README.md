@@ -54,58 +54,64 @@ Instances of two subclasses, Error, and Exception, are conventionally used to in
 
 4.
   Examples of catching and handling exceptions
+
   a.
-  try {
-    
-    FileInput file = new FileInput("file.txt")
-    file.close();
-} catch (FileNotFoundException e) {
-    System.out.println("File not found: " + e.getMessage());
-} catch (IOException e) {
-    System.out.println("IO error occurred: " + e.getMessage());
-}
+  
+      try {
+          
+          FileInput file = new FileInput("file.txt")
+          file.close();
+      } catch (FileNotFoundException e) {
+          System.out.println("File not found: " + e.getMessage());
+      } catch (IOException e) {
+          System.out.println("IO error occurred: " + e.getMessage());
+      }
 
-b.
-try {
-    
-    int[] a = new int[50];
-    System.out.println(arr[100]);
-} catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-    System.out.println("Exception occurred: " + e.getMessage());
-}
+  b.
 
-c. 
-try {
-    
-    String s = null;
-    System.out.println(s.length()); 
-} catch (Exception e) {
-    System.out.println("Exception occurred: " + e.getMessage());
-}
+      try {
+       
+         int[] a = new int[50];
+         System.out.println(arr[100]);
+      } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+         System.out.println("Exception occurred: " + e.getMessage());
+      }
 
-d.
-try {   
-    int result = 30 / 0; 
-} catch (ArithmeticException e) {
-    System.out.println("Cannot divide by zero.");
-    throw e; 
-}
+   c. 
 
-e.
-try {
-   
-    try {
-        
-        String str = "prj";
-        int num = Integer.parseInt(str); 
-    } catch (NumberFormatException e) {
-        System.out.println("NumberFormatException: " + e.getMessage());
-    }
-    int[] arr = new int[50];
-    System.out.println(arr[10]); 
-} catch (ArrayIndexOutOfBoundsException e) {
-    System.out.println("ArrayIndexOutOfBoundsException: " + e.getMessage());
-}
+      try {
+          
+          String s = null;
+          System.out.println(s.length()); 
+      } catch (Exception e) {
+          System.out.println("Exception occurred: " + e.getMessage());
+      }
+
+
+   d.
+
+      try {   
+          int result = 30 / 0; 
+      } catch (ArithmeticException e) {
+          System.out.println("Cannot divide by zero.");
+          throw e; 
+      }
+
+
+   e.
+
+      try {   
+          try {        
+              String str = "prj";
+              int num = Integer.parseInt(str); 
+          } catch (NumberFormatException e) {
+              System.out.println("NumberFormatException: " + e.getMessage());
+          }
+          int[] arr = new int[50];
+          System.out.println(arr[10]); 
+      } catch (ArrayIndexOutOfBoundsException e) {
+          System.out.println("ArrayIndexOutOfBoundsException: " + e.getMessage());
+      }
 
 
 
