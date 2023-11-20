@@ -1,9 +1,11 @@
+package Capstone;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -22,6 +24,7 @@ public class Main {
                 scanner.next();
             } catch (IllegalArgumentException e) {
                 System.out.println(e);
+                throw e;
             
             }
         }
@@ -38,6 +41,8 @@ public class Main {
                 scanner.next();
             } catch (IllegalArgumentException e) {
                 System.out.println(e);
+                 //Re throwing
+                throw e;
             }
         }
 
@@ -55,10 +60,14 @@ public class Main {
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Exception: Must be an integer");
-                    System.out.println( e.getCause());
+                    System.out.println(e);
                     scanner.next();
+                    //  //Re throwing
+                    throw e;
                 } catch (IllegalArgumentException e) {
                     System.out.println(e);
+                    //Re throwing
+                    throw e;
                     
                 } finally {
                 	scanner.close();
@@ -82,6 +91,7 @@ public class Main {
                 }
             } catch (Exception e) {
                 System.out.println("Exception occurred during station creation: " + e.getMessage());
+                throw e;
                
             }
         }
