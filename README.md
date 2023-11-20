@@ -1,6 +1,7 @@
 # Car-Charging-Station
 Simulation of the Car charging station with several alternative sources of energy. 
 Task Completion Description:
+
 Matriculation Number: 7216156
 Responsibilities:
 1. Develop the Station configuration for the Capstone project and also the corresponding part in the Main.java file to align the Locatio.java and Station.java file
