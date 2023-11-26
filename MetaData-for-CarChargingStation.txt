@@ -1,13 +1,13 @@
 Here's the metadata for CarChargingStation Java project:
 
-1. __Main Class__
+1. Main Class
    - Purpose: The main class of the application handling user inputs and interactions with charging stations and users.
    - Functionality:
      - Takes user input for station and location counts, weather conditions, user details, and manages the charging stations accordingly.
      - Handles exceptions related to input validation and station operations.
 
 
-2. **Station Class**
+2. Station Class
    - Purpose: Represents a charging station with locations, energy sources, a priority queue for users, and methods for managing access and bookings.
    - Fields:
      - private List<Location> locations: Holds the locations within the station.
