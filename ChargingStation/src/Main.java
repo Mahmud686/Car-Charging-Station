@@ -160,7 +160,7 @@ public class Main {
 
             if (!foundEmptyLocation) {
                 System.out.println("No empty locations found. Adding " + user.getUsername() + " to the priority queue.");
-                chargingStations[0].addToPriorityQueue(user); // Adding to the priority queue of the first station for illustration
+                chargingStations[0].addToPriorityQueue(user); 
             }
 
             try {
@@ -170,7 +170,7 @@ public class Main {
 
                     if (clearChoice.equals("yes")) {
                         for (Station station : chargingStations) {
-                            // Clear all locations for each station
+                            
                             station.clearAllLocations();
                             System.out.println("All locations cleared by " + user.getUsername());
                         }
