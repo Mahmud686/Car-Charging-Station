@@ -1,0 +1,77 @@
+Here's the metadata for CarChargingStation Java project:
+
+1. Main Class
+   - Purpose: The main class of the application handling user inputs and interactions with charging stations and users.
+   - Functionality:
+     - Takes user input for station and location counts, weather conditions, user details, and manages the charging stations accordingly.
+     - Handles exceptions related to input validation and station operations.
+
+
+2. Station Class
+   - Purpose: Represents a charging station with locations, energy sources, a priority queue for users, and methods for managing access and bookings.
+   - Fields:
+     - private List<Location> locations: Holds the locations within the station.
+     - private SourceofEnergy sourceOfEnergy: Represents the energy source used by the station.
+     - private Queue<User> priorityQueue: Priority queue for user access.
+     - private Map<User, Integer> timeslots: Tracks timeslots booked by users.
+   - Methods:
+     - Various methods to manage location status, user bookings, priority queue, access control, and clearing locations.
+
+3. Location Class
+   - Purpose: Represents a location and its occupancy status for charging stations.
+   - Fields:
+     - private boolean occupied: Indicates whether the location is occupied or not.
+   - Methods:
+     - isOccupied(): Checks if the location is occupied.
+     - occupy(): Marks the location as occupied.
+     - release(): Releases the occupied status of the location.
+
+4. WeatherConditions Class
+   - Purpose: Simulates weather conditions and provides methods to retrieve current weather conditions.
+   - Methods:
+     - getWeather(): Returns the current weather condition (SUNNY, WINDY, RAINY).
+
+5. SourceofEnergy Interface
+   - Purpose: An interface defining methods for energy sources.
+   - Methods:
+     - provideEnergy(): To provide energy output.
+     - switchSourceofEnergy(WeatherConditions.Weather weather): To switch the energy source based on weather conditions.
+
+6. ChargingException Class
+   - Purpose: A custom exception class specifically designed for handling exceptions related to charging operations or energy sources.
+   - Constructors:
+     - ChargingException(String message): Initializes the exception with a message.
+     - ChargingException(String message, Throwable cause): Initializes the exception with a message and a cause.
+
+7. SolarPanel Class (implements SourceofEnergy)
+   - Purpose: Represents a solar panel as an energy source that can be switched on/off based on weather conditions.
+   - Fields:
+     - private boolean isSwitchedOn: Indicates whether the solar panel is active.
+   - Methods:
+     - provideEnergy(): Provides energy output based on the switched-on status.
+     - switchSourceofEnergy(WeatherConditions.Weather weather): Switches the energy source on/off based on weather conditions.
+
+8. Electricity Class (implements SourceofEnergy)
+   - Purpose: Represents an electricity source of energy that can be switched on or off based on weather conditions.
+   - Fields:
+     - private boolean isSwitchedOn: Indicates whether the electricity source is active.
+   - Methods:
+     - provideEnergy(): Provides energy output based on the switched-on status.
+     - switchSourceofEnergy(WeatherConditions.Weather weather): Switches the energy source on/off based on weather conditions.
+
+9. WindTurbine Class (implements SourceofEnergy)
+   - Purpose: Represents a wind turbine as an energy source that can be switched on/off based on weather conditions.
+   - Fields:
+     - private boolean isSwitchedOn: Indicates whether the wind turbine is active.
+   - Methods:
+     - provideEnergy(): Provides energy output based on the switched-on status.
+     - switchSourceofEnergy(WeatherConditions.Weather weather): Switches the energy source on/off based on weather conditions. 
+
+10. User Class
+    - Purpose: Represents a user with a username and user type (ADMINISTRATOR or EXTERNAL_USER).
+    - Fields:
+      - private String username: Stores the username of the user.
+      - private UserType userType: Indicates the type of user (ADMINISTRATOR or EXTERNAL_USER).
+    - Methods:
+      - getUsername(): Returns the username of the user.
+      - getUserType(): Returns the type of the user.
