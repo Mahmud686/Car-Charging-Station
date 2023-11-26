@@ -79,22 +79,22 @@ public class Station {
     public void manageAccess(User user) throws ChargingException {
         if (user.getUserType() == User.UserType.ADMINISTRATOR) {
             System.out.println("Administrator " + user.getUsername() + " has unrestricted access.");
-            // Implement logic for allowing administrators to perform actions without restrictions
+        
         } else if (user.getUserType() == User.UserType.EXTERNAL_USER) {
             if (!priorityQueue.isEmpty() && priorityQueue.peek() == user) {
                 System.out.println("User " + user.getUsername() + " has been granted access.");
-                chargeCar(); // Assuming access grants the user the ability to charge a car
-                priorityQueue.poll(); // Remove the user from the front of the queue after granting access
+                chargeCar(); 
+                priorityQueue.poll(); 
             } else {
                 throw new ChargingException("Access denied. User " + user.getUsername() + " is not at the front of the queue.");
             }
         }
-        // Add more conditions for different user types or access control rules as needed
+        
     }
     
     public void clearAllLocations() {
         for (Location location : locations) {
-            location.release(); // Release all occupied locations
+            location.release(); 
         }
         System.out.println("All locations cleared.");
     }
