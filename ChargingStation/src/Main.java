@@ -1,7 +1,9 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.io.IOException;
+import java.util.logging.*;
 
-public class Main {
+public class Main extends Logfile{
 
     public static void main(String[] args) throws ChargingException {
 
@@ -9,6 +11,9 @@ public class Main {
 
         int numStations = -1;
         int numLocations = -1;
+        SystemFunctionalityStartedlog();
+
+
 
         while (numStations < 1) {
             System.out.print("Enter the number of charging stations: ");
@@ -38,11 +43,12 @@ public class Main {
                 scanner.next();
             } catch (IllegalArgumentException e) {
                 System.out.println(e);
-              //throw e;
+                //throw e;
             }
         }
 
         Station[] chargingStations = new Station[numStations];
+
 
         for (int i = 0; i < numStations; i++) {
             int weatherChoice = -1;
@@ -59,12 +65,12 @@ public class Main {
                     scanner.next();
                 } catch (IllegalArgumentException e) {
                     System.out.println(e);
-                  //throw e;
+                    //throw e;
                 }//finally{
-            	//scanner.close();
-            //}
+                //scanner.close();
+                //}
             }
-
+            simulateChargingStationFunctionality();
             try {
                 if (weatherChoice == 0) {
                     System.out.println("Switching to Solarpanel energy source.");
@@ -82,7 +88,7 @@ public class Main {
                 }
             } catch (Exception e) {
                 System.out.println("Exception occurred during station creation: " + e.getMessage());
-              //throw e;
+                //throw e;
             }
         }
 
@@ -104,13 +110,14 @@ public class Main {
         }
 
         User[] users = new User[numUsers];
+        setupLogger(energyManagementLogger, "energy_management.log");
 
         for (int i = 0; i < numUsers; i++) {
             System.out.print("Enter username for user " + (i + 1) + ": ");
             String username = scanner.next();
             int userTypeChoice = -1;
             User.UserType userType = null;
-
+            simulateEnergyManagementFunctionalityStartlog();
             while (userTypeChoice != 1 && userTypeChoice != 2) {
                 System.out.print("Enter user type (1 for ADMINISTRATOR, 2 for EXTERNAL_USER) for user " + (i + 1) + ": ");
                 try {
@@ -134,7 +141,7 @@ public class Main {
         }
 
         for (User user : users) {
-        	boolean foundEmptyLocation = false;
+            boolean foundEmptyLocation = false;
 
             for (int i = 0; i < chargingStations.length; i++) {
                 for (int j = 0; j < chargingStations[i].getLocations().size(); j++) {
@@ -160,8 +167,9 @@ public class Main {
 
             if (!foundEmptyLocation) {
                 System.out.println("No empty locations found. Adding " + user.getUsername() + " to the priority queue.");
-                chargingStations[0].addToPriorityQueue(user); 
+                chargingStations[0].addToPriorityQueue(user);
             }
+
 
             try {
                 if (user.getUserType() == User.UserType.ADMINISTRATOR) {
@@ -170,7 +178,7 @@ public class Main {
 
                     if (clearChoice.equals("yes")) {
                         for (Station station : chargingStations) {
-                            
+
                             station.clearAllLocations();
                             System.out.println("All locations cleared by " + user.getUsername());
                         }
@@ -182,7 +190,19 @@ public class Main {
                 System.out.println(e.getMessage());
             }
         }
-
+        simulateEnergyManagementFunctionalityEndlog();
         scanner.close();
+        setupLogger(systemLogger, "system.log");
+        setupLogger(chargingStationLogger, "charging_station.log");
+        setupLogger(energyManagementLogger, "energy_management.log");
+
+        SystemFunctionalityEndlog();
+
+
+
+
     }
+
+
+
 }
