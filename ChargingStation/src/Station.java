@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Station {
     private List<Location> locations;
@@ -15,9 +16,9 @@ public class Station {
         this.priorityQueue = new LinkedList<>();
         this.timeslots = new HashMap<>();
     }
-    
 
-    
+
+
     public boolean chargeCar() throws ChargingException {
         boolean charged = false;
         for (Location location : locations) {
@@ -76,25 +77,43 @@ public class Station {
         System.out.println(user.getUsername() + " has been added to the priority queue");
     }
     
+    public void simulateCarsArriving() {
+    	while (!priorityQueue.isEmpty()) {
+            User user = priorityQueue.peek();
+            int startTime = timeslots.get(user);
+
+            int currentTime = (int) TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis());
+            int waitingTime = currentTime - startTime;
+
+            if (waitingTime > 15) {
+                System.out.println("Car for user " + user.getUsername() + " has waited for " + waitingTime + " minutes and exceeded 15 minutes. It's leaving the queue.");
+                priorityQueue.poll();
+            } else {
+                System.out.println("Car for user " + user.getUsername() + " has been waiting for " + waitingTime + " minutes.");
+                break;
+            }
+        }
+    }
+
     public void manageAccess(User user) throws ChargingException {
         if (user.getUserType() == User.UserType.ADMINISTRATOR) {
             System.out.println("Administrator " + user.getUsername() + " has unrestricted access.");
-        
+
         } else if (user.getUserType() == User.UserType.EXTERNAL_USER) {
             if (!priorityQueue.isEmpty() && priorityQueue.peek() == user) {
                 System.out.println("User " + user.getUsername() + " has been granted access.");
-                chargeCar(); 
-                priorityQueue.poll(); 
+                chargeCar();
+                priorityQueue.poll();
             } else {
                 throw new ChargingException("Access denied. User " + user.getUsername() + " is not at the front of the queue.");
             }
         }
-        
+
     }
-    
+
     public void clearAllLocations() {
         for (Location location : locations) {
-            location.release(); 
+            location.release();
         }
         System.out.println("All locations cleared.");
     }
@@ -104,3 +123,4 @@ public class Station {
         return this.locations;
     }
 }
+
