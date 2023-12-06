@@ -8,6 +8,7 @@ public class Main extends Logfile{
     public static void main(String[] args) throws ChargingException {
 
         Scanner scanner = new Scanner(System.in);
+        
 
         int numStations = -1;
         int numLocations = -1;
@@ -195,8 +196,12 @@ public class Main extends Logfile{
         setupLogger(systemLogger, "system.log");
         setupLogger(chargingStationLogger, "charging_station.log");
         setupLogger(energyManagementLogger, "energy_management.log");
-
         SystemFunctionalityEndlog();
+        
+        // cars arriving at the charging stations
+        for (Station station : chargingStations) {
+            station.simulateCarsArriving();
+        }
 
 
 
