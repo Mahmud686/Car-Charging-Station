@@ -1,5 +1,9 @@
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Station {
     private List<Location> locations;
@@ -38,10 +42,10 @@ public class Station {
     }
 
     public void displayStationStatus(Scanner scanner, int stationNumber) throws ChargingException {
-        for (int i = 0; i < locations.size(); i++) {
+        for (int j = 0; j < locations.size(); j++) {
             int status = -1;
             while (status < 0 || status > 1) {
-                System.out.print("Enter status for charging location " + (i + 1) + " at station " + stationNumber + " (1 for Occupied, 0 for Empty): ");
+                System.out.print("Enter status for charging location " + (j + 1) + " at this station (1 for Occupied, 0 for Empty): ");
                 try {
                     status = scanner.nextInt();
                     if (status < 0 || status > 1) {
@@ -49,10 +53,10 @@ public class Station {
                         scanner.nextLine();
                     } else {
                         if (status == 1) {
-                            locations.get(i).occupy();
+                            locations.get(j).occupy();
                         }
                         String displayStatus = (status == 1) ? "Occupied" : "Empty";
-                        System.out.println("Charging location " + (i + 1) + " at station " + stationNumber + " is: " + displayStatus);
+                        System.out.println("Charging location " + (j + 1) + " at this station: " + displayStatus);
                     }
                 } catch (InputMismatchException e) {
                     throw new ChargingException("Error while taking input for charging location status", e);
@@ -60,8 +64,11 @@ public class Station {
                     throw new ChargingException("Unknown error occurred while taking input for charging location status", e.getCause());
                 }
             }
+            scanner.nextLine();
         }
     }
+
+
 
     public void bookTimeslot(User user, int timeslot) {
         if (!timeslots.containsKey(user)) {
@@ -77,25 +84,37 @@ public class Station {
         System.out.println(user.getUsername() + " has been added to the priority queue");
     }
     
-    public void simulateCarsArriving() {
-    	while (!priorityQueue.isEmpty()) {
-            User user = priorityQueue.peek();
-            int startTime = timeslots.get(user);
-
-            int currentTime = (int) TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis());
-            int waitingTime = currentTime - startTime;
-
-            if (waitingTime > 15) {
-                System.out.println("Car for user " + user.getUsername() + " has waited for " + waitingTime + " minutes and exceeded 15 minutes. It's leaving the queue.");
-                priorityQueue.poll();
-            } else {
-                System.out.println("Car for user " + user.getUsername() + " has been waiting for " + waitingTime + " minutes.");
-                break;
+    public void CarsArriving() {
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        
+        executorService.scheduleAtFixedRate(() -> {
+            if (!priorityQueue.isEmpty()) {
+                User user = priorityQueue.peek();
+                int startTime = timeslots.get(user);
+                
+                int currentTime = (int) TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis());
+                int waitingTime = currentTime - startTime;
+                
+                if (waitingTime > 15) {
+                    System.out.println("Car for user " + user.getUsername() + " has waited for " + waitingTime + " minutes and exceeded 15 minutes. It's leaving the queue.");
+                    priorityQueue.poll();
+                } else {
+                    System.out.println("Car for user " + user.getUsername() + " has been waiting for " + waitingTime + " minutes.");
+                }
             }
-        }
-    }
+        }, 0, 1, TimeUnit.MINUTES);
 
-    public void manageAccess(User user) throws ChargingException {
+        // Schedule a task to shutdown the executor service after 15 minutes
+        executorService.schedule(() -> {
+            executorService.shutdown();
+            System.out.println("15 minutes countdown finished!");
+            // Perform any action after the 15-minute countdown here
+        }, 15, TimeUnit.MINUTES);
+        
+    }
+    
+    
+ void manageAccess(User user) throws ChargingException {
         if (user.getUserType() == User.UserType.ADMINISTRATOR) {
             System.out.println("Administrator " + user.getUsername() + " has unrestricted access.");
 
@@ -123,4 +142,3 @@ public class Station {
         return this.locations;
     }
 }
-
