@@ -3,18 +3,19 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.util.logging.*;
 
-public class Main extends Logfile{
+public class Main extends Logfile {
 
-    public static void main(String[] args) throws ChargingException {
+    public static void main(String[] args) {
+        setupLogger(systemLogger, "system.log");
+        setupLogger(chargingStationLogger, "charging_station.log");
+        setupLogger(energyManagementLogger, "energy_management.log");
+
+        SystemFunctionalityStartedlog();
 
         Scanner scanner = new Scanner(System.in);
-        
 
         int numStations = -1;
         int numLocations = -1;
-        SystemFunctionalityStartedlog();
-
-
 
         while (numStations < 1) {
             System.out.print("Enter the number of charging stations: ");
@@ -24,11 +25,10 @@ public class Main extends Logfile{
                     throw new IllegalArgumentException("Exception: Must be a positive integer");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Exception: Must be an integer");
+                systemLogger.log(Level.SEVERE, "Exception: Must be an integer", e);
                 scanner.next();
             } catch (IllegalArgumentException e) {
-                System.out.println(e);
-                //throw e;
+                systemLogger.log(Level.INFO, e.getMessage());
             }
         }
 
@@ -53,9 +53,10 @@ public class Main extends Logfile{
 
         for (int i = 0; i < numStations; i++) {
             int weatherChoice = -1;
+            int stationNumber = i + 1; // Track the current station number
 
             while (weatherChoice < 0 || weatherChoice > 2) {
-                System.out.print("Enter weather condition for station " + (i + 1) + " (0 for SUNNY, 1 for WINDY, 2 for RAINY): ");
+                System.out.print("Enter weather condition for station " + stationNumber + " (0 for SUNNY, 1 for WINDY, 2 for RAINY): ");
                 try {
                     weatherChoice = scanner.nextInt();
                     if (weatherChoice < 0 || weatherChoice > 2) {
@@ -65,7 +66,7 @@ public class Main extends Logfile{
                     System.out.println("Exception: Must be an integer");
                     scanner.next();
                 } catch (IllegalArgumentException e) {
-                    System.out.println(e);
+                    System.out.println(e);            
                     //throw e;
                 }//finally{
                 //scanner.close();
@@ -148,15 +149,17 @@ public class Main extends Logfile{
                 for (int j = 0; j < chargingStations[i].getLocations().size(); j++) {
                     if (!chargingStations[i].getLocations().get(j).isOccupied()) {
                         foundEmptyLocation = true;
-                        System.out.println("Station " + (i + 1) + ", Location " + (j + 1) + " is available for charging. Book time slot for user "+ user.getUsername() +" ? (Y/N):");
+                        System.out.println("Station " + (i + 1) + ", Location " + (j + 1) + " is available for charging.");
+
+                        System.out.print("Book time slot for user " + user.getUsername() + " at this location? (Y/N): ");
                         String bookChoice = scanner.next().toLowerCase();
 
                         if (bookChoice.equals("y")) {
                             chargingStations[i].getLocations().get(j).occupy();
                             System.out.println("Charging location " + (j + 1) + " at station " + (i + 1) + " is booked for " + user.getUsername() + ".");
                         } else if (bookChoice.equals("n")) {
-                            chargingStations[0].addToPriorityQueue(user);
-                            System.out.println(user.getUsername() + " added to the priority queue.");
+                            chargingStations[i].addToPriorityQueue(user);
+                            System.out.println(user.getUsername() + " added to the priority queue of station " + (i + 1) + ".");
                         }
                         break;
                     }
@@ -167,10 +170,21 @@ public class Main extends Logfile{
             }
 
             if (!foundEmptyLocation) {
-                System.out.println("No empty locations found. Adding " + user.getUsername() + " to the priority queue.");
-                chargingStations[0].addToPriorityQueue(user);
-            }
+                System.out.println("No empty locations were found for username " + user.getUsername() + ".");
+                
+                int stationChoice;
+                do {
+                    System.out.println("Where do you want to book a time slot? (Enter station number from 1 to " + numStations + "): ");
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Invalid input. Enter a valid station number.");
+                        scanner.next();
+                    }
+                    stationChoice = scanner.nextInt();
+                } while (stationChoice < 1 || stationChoice > numStations);
 
+                chargingStations[stationChoice - 1].addToPriorityQueue(user);
+                System.out.println(user.getUsername() + " has been added to the priority queue of station " + stationChoice + ".");
+            }
 
             try {
                 if (user.getUserType() == User.UserType.ADMINISTRATOR) {
@@ -193,21 +207,14 @@ public class Main extends Logfile{
         }
         simulateEnergyManagementFunctionalityEndlog();
         scanner.close();
-        setupLogger(systemLogger, "system.log");
-        setupLogger(chargingStationLogger, "charging_station.log");
-        setupLogger(energyManagementLogger, "energy_management.log");
+
         SystemFunctionalityEndlog();
         
-        // cars arriving at the charging stations
+        //cars arriving at the charging stations
         for (Station station : chargingStations) {
-            station.simulateCarsArriving();
+            station.CarsArriving();
         }
 
-
-
-
     }
-
-
 
 }
