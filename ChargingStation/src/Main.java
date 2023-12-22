@@ -168,7 +168,7 @@ public class Main extends Logfile {
                     break;
                 }
             }
-
+      //for users
             if (!foundEmptyLocation) {
                 System.out.println("No empty locations were found for username " + user.getUsername() + ".");
                 
