@@ -1,14 +1,16 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.IOException;
+import java.util.concurrent.Semaphore;
 import java.util.logging.*;
 
 public class Main extends Logfile {
 
     public static void main(String[] args) {
-        setupLogger(systemLogger, "system.log");
-        setupLogger(chargingStationLogger, "charging_station.log");
-        setupLogger(energyManagementLogger, "energy_management.log");
+//        setupLogger(systemLogger, "system");
+//        setupLogger(chargingStationLogger, "charging_station");
+//        setupLogger(energyManagementLogger, "energy_management");
+//        setupLogger(energySourcelogger, "energySources");
 
         SystemFunctionalityStartedlog();
 
@@ -66,7 +68,7 @@ public class Main extends Logfile {
                     System.out.println("Exception: Must be an integer");
                     scanner.next();
                 } catch (IllegalArgumentException e) {
-                    System.out.println(e);            
+                    System.out.println(e);
                     //throw e;
                 }//finally{
                 //scanner.close();
@@ -112,14 +114,15 @@ public class Main extends Logfile {
         }
 
         User[] users = new User[numUsers];
-        setupLogger(energyManagementLogger, "energy_management.log");
+        //setupLogger(energyManagementLogger, "energy_management.log");
 
         for (int i = 0; i < numUsers; i++) {
+            //simulateEnergyManagementFunctionalityStartlog();
             System.out.print("Enter username for user " + (i + 1) + ": ");
             String username = scanner.next();
             int userTypeChoice = -1;
             User.UserType userType = null;
-            simulateEnergyManagementFunctionalityStartlog();
+
             while (userTypeChoice != 1 && userTypeChoice != 2) {
                 System.out.print("Enter user type (1 for ADMINISTRATOR, 2 for EXTERNAL_USER) for user " + (i + 1) + ": ");
                 try {
@@ -150,7 +153,8 @@ public class Main extends Logfile {
                     if (!chargingStations[i].getLocations().get(j).isOccupied()) {
                         foundEmptyLocation = true;
                         System.out.println("Station " + (i + 1) + ", Location " + (j + 1) + " is available for charging.");
-
+                        energySourcelogger.info("Station " + (i + 1) + ", Location " + (j + 1) + " is available for charging.");
+                        energySourceLoggerSimulation("Station " + (i + 1) + ", Location " + (j + 1) + " is available for charging.");
                         System.out.print("Book time slot for user " + user.getUsername() + " at this location? (Y/N): ");
                         String bookChoice = scanner.next().toLowerCase();
 
@@ -168,10 +172,10 @@ public class Main extends Logfile {
                     break;
                 }
             }
-      //for users
+
             if (!foundEmptyLocation) {
                 System.out.println("No empty locations were found for username " + user.getUsername() + ".");
-                
+
                 int stationChoice;
                 do {
                     System.out.println("Where do you want to book a time slot? (Enter station number from 1 to " + numStations + "): ");
@@ -205,16 +209,31 @@ public class Main extends Logfile {
                 System.out.println(e.getMessage());
             }
         }
-        simulateEnergyManagementFunctionalityEndlog();
-        scanner.close();
+        int maxChargeLevel = 100;
+        int minChargeLevelForWarning = 30;
 
-        SystemFunctionalityEndlog();
-        
+        ReserveBattery reserveBattery = new ReserveBattery(maxChargeLevel, minChargeLevelForWarning);
+
+        EnergySource solarPanel = new EnergySource("Solar Panel", reserveBattery, 5);
+        EnergySource electricity = new EnergySource("Electricity", reserveBattery, 10);
+        EnergySource windTurbine = new EnergySource("Wind Turbine", reserveBattery, 3);
+
+        Thread solarThread = new Thread(solarPanel);
+        Thread electricityThread = new Thread(electricity);
+        Thread windThread = new Thread(windTurbine);
+
+        solarThread.start();
+        electricityThread.start();
+        windThread.start();
+
+
+
         //cars arriving at the charging stations
         for (Station station : chargingStations) {
             station.CarsArriving();
-        }
 
+        }
+        SystemFunctionalityEndlog();
     }
 
 }
