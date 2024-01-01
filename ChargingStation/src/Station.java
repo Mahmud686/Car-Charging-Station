@@ -21,7 +21,9 @@ public class Station {
         this.timeslots = new HashMap<>();
     }
 
-
+    public Map<User, Integer> getTimeslots() {
+        return this.timeslots;
+    }
 
     public boolean chargeCar() throws ChargingException {
         boolean charged = false;
