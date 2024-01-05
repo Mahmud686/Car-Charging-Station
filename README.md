@@ -2,20 +2,16 @@
 Simulation of the Car charging station with several alternative sources of energy. 
 Task Completion Description:
 **Video Link for HA1: https://drive.google.com/drive/folders/10qNpIsHisxGChzI0f28tH1p7cvdQrXDP?usp=drive_link**
-__Matriculation Number: 7216156__
-__Responsibilities:__
+
+Responsibilities:
 **HA1**:
+Matriculation Number: 7216156
 1. Develop the Station configuration for the Capstone project and also the corresponding part in the Main.java file to align the Locatio.java and Station.java file
-2. Create chaining exceptions which mean to relate one exception with another exception, i.e one exception describes the cause of another exception
+2. Create chaining exceptions which means to relate one exception with another exception, i.e one exception describes the cause of another exception
    Handled the wrong weather status input to implement chaining exception in Hometask 1
 3. Write the theory answers to Hometask 1 (question no 2.1), Hometask 2 (question no 2.1)
-**HA2**:
-1. Created multi-user access to the charging station – external users who could book timeslot and be part of the prioritized queue, administrators 
-
-
-__Matriculation Number: 7219089__
-__Responsibilities:__
-**HA1**:
+4. 
+Matriculation Number: 7219089
 1. Develop the Weather conditions and Energy sources configuration for the Capstone project and also the corresponding part in the Main.java file to align the scenario of the capstone project
 2. Create Resource Management exceptions in the capstone project in Hometask 1 where the scanner is closed to reduce the usage of resources.
 3. Write the theory answers to Hometask 1 (question no 2.4), and Hometask 2 (question no 2.3)
@@ -35,8 +31,8 @@ Responsibilities:
 1. Develop the code for Rethrowing the exception for the capstone project and also the corresponding part such number of location and number of station.
 2. work basically on the main class in the capstone project in hometask1
 3. also created custom exceptions.
-**HA2 responsibility**
-**Video link of HA2: https://drive.google.com/drive/folders/1TFUsn139Ho-V1LXvAiLPolhtAdmccXyc?usp=drive_link**
+**HA3 responsibility**
+**Video link of HA3: https://drive.google.com/drive/folders/1TFUsn139Ho-V1LXvAiLPolhtAdmccXyc?usp=drive_link**
 Matriculation Number: 7219089
 Responsibilities:
 1. For the Capstone project, solved ques1:Simulate the system which simultaneously charges 1..N vehicles, depending on the available resources.
@@ -44,6 +40,6 @@ Responsibilities:
 Write the theory answers to Home task 3 (question no 3.1).
 Matriculation Number: 7216156
 Responsibilities:
-1. For the Capstone project, solved ques 2: The testing program simulates the charging of cars in parallel at 2..N charging stations, car arriving in random moment. When the car appears in the queue, calculate the waiting time, if the time is more than 15 min car leaves the queue.
+1. For the Capstone project, solve question 2: The testing program simulates the charging of cars in parallel at 2..N charging stations, car arriving in random moment. When the car appears in the queue, calculate the waiting time, if the time is more than 15 minutes car leaves the queue.
 2. Write the theory answers to Home task 3 (question no 3.2).
 
