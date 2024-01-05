@@ -54,6 +54,7 @@ Write the theory answers to Home task 3 (question no 3.3).
 Responsibilities,
 
 **HA4**
+**Video link of HA3: https://drive.google.com/drive/folders/1wvibTp3m40WZ_am6Exc3bOZsTJ1ucHyM?usp=drive_link**
 Matriculation Number: 7219089
 Responsibilities:
 1.
