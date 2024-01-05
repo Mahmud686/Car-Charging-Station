@@ -3,7 +3,6 @@ Simulation of the Car charging station with several alternative sources of energ
 Task Completion Description:
 **Video Link for HA1: https://drive.google.com/drive/folders/10qNpIsHisxGChzI0f28tH1p7cvdQrXDP?usp=drive_link**
 
-Responsibilities:
 **HA1**:
 Matriculation Number: 7216156
 1. Develop the Station configuration for the Capstone project and also the corresponding part in the Main.java file to align the Locatio.java and Station.java file
