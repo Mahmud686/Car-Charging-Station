@@ -3,7 +3,9 @@ Simulation of the Car charging station with several alternative sources of energ
 Task Completion Description:
 
 **Video Link for HA1: https://drive.google.com/drive/folders/10qNpIsHisxGChzI0f28tH1p7cvdQrXDP?usp=drive_link**
+
 **HA1**
+
 __Responsibilities:__
 
 __Matriculation Number: 7219089__ 
