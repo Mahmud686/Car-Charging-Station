@@ -82,8 +82,8 @@ __Matriculation Number: 7219293__
 __HA4 Responsibilities:__
 
 __Matriculation Number: 7219089__
-1.	For Capstone project, solved part of ques 1: Worked on log files of Location
-2.	Write the theory answers to Home task 4 (question no 4.1, 4.2).
+1.	For Capstone project, solved part of ques 1: Worked on log files of Charging Station
+2.	Write the theory answers to Home task 4 (questions no 4.1, 4.2).
 
 __Matriculation Number: 7216156__
 1.	For Capstone project, solved part of ques 2: Give user the possibility to open the requested log file based on the name of the equipment or date.
