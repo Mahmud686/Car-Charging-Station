@@ -245,7 +245,6 @@ public class Main extends Logfile {
         System.out.print("Administrator " + username + ", do you want to check the Logfile? (yes or no): ");
         String checkLogfileChoice = scanner.next().toLowerCase();
         
-        // Consume the newline character
         scanner.nextLine();
 
         if (checkLogfileChoice.equals("yes")) {
