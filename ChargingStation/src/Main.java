@@ -1,3 +1,4 @@
+package task5;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.IOException;
@@ -146,62 +147,66 @@ public class Main extends Logfile {
         }
 
         for (User user : users) {
-            boolean foundEmptyLocation = false;
+        	
+        	if (user.getUserType() == User.UserType.EXTERNAL_USER) {
+                boolean foundEmptyLocation = false;
 
-            for (int i = 0; i < chargingStations.length; i++) {
-                for (int j = 0; j < chargingStations[i].getLocations().size(); j++) {
-                    if (!chargingStations[i].getLocations().get(j).isOccupied()) {
-                        foundEmptyLocation = true;
-                        System.out.println("Station " + (i + 1) + ", Location " + (j + 1) + " is available for charging.");
-                        energySourcelogger.info("Station " + (i + 1) + ", Location " + (j + 1) + " is available for charging.");
-                        energySourceLoggerSimulation("Station " + (i + 1) + ", Location " + (j + 1) + " is available for charging.");
-                        System.out.print("Book time slot for user " + user.getUsername() + " at this location? (Y/N): ");
-                        String bookChoice = scanner.next().toLowerCase();
+                for (int i = 0; i < chargingStations.length; i++) {
+                    for (int j = 0; j < chargingStations[i].getLocations().size(); j++) {
+                        if (!chargingStations[i].getLocations().get(j).isOccupied()) {
+                            foundEmptyLocation = true;
+                            System.out.println("Station " + (i + 1) + ", Location " + (j + 1) + " is available for charging.");
+                            energySourcelogger.info("Station " + (i + 1) + ", Location " + (j + 1) + " is available for charging.");
+                            energySourceLoggerSimulation("Station " + (i + 1) + ", Location " + (j + 1) + " is available for charging.");
+                            System.out.print("Book time slot for user " + user.getUsername() + " at this location? (Y/N): ");
+                            String bookChoice = scanner.next().toLowerCase();
 
-                        if (bookChoice.equals("y")) {
-                            chargingStations[i].getLocations().get(j).occupy();
-                            System.out.println("Charging location " + (j + 1) + " at station " + (i + 1) + " is booked for " + user.getUsername() + ".");
-                        } else if (bookChoice.equals("n")) {
-                            chargingStations[i].addToPriorityQueue(user);
-                            System.out.println(user.getUsername() + " added to the priority queue of station " + (i + 1) + ".");
+                            if (bookChoice.equals("y")) {
+                                chargingStations[i].getLocations().get(j).occupy();
+                                System.out.println("Charging location " + (j + 1) + " at station " + (i + 1) + " is booked for " + user.getUsername() + ".");
+                            } else if (bookChoice.equals("n")) {
+                                chargingStations[i].addToPriorityQueue(user);
+                                System.out.println(user.getUsername() + " added to the priority queue of station " + (i + 1) + ".");
+                            }
+                            break;
                         }
+                    }
+                    if (foundEmptyLocation) {
                         break;
                     }
                 }
-                if (foundEmptyLocation) {
-                    break;
+
+                if (!foundEmptyLocation) {
+                    System.out.println("No empty locations were found for username " + user.getUsername() + ".");
+
+                    int stationChoice;
+                    do {
+                        System.out.println("Where do you want to book a time slot? (Enter station number from 1 to " + numStations + "): ");
+                        while (!scanner.hasNextInt()) {
+                            System.out.println("Invalid input. Enter a valid station number.");
+                            scanner.next();
+                        }
+                        stationChoice = scanner.nextInt();
+                    } while (stationChoice < 1 || stationChoice > numStations);
+
+                    chargingStations[stationChoice - 1].addToPriorityQueue(user);
+                    System.out.println(user.getUsername() + " has been added to the priority queue of station " + stationChoice + ".");
                 }
             }
-
-            if (!foundEmptyLocation) {
-                System.out.println("No empty locations were found for username " + user.getUsername() + ".");
-
-                int stationChoice;
-                do {
-                    System.out.println("Where do you want to book a time slot? (Enter station number from 1 to " + numStations + "): ");
-                    while (!scanner.hasNextInt()) {
-                        System.out.println("Invalid input. Enter a valid station number.");
-                        scanner.next();
-                    }
-                    stationChoice = scanner.nextInt();
-                } while (stationChoice < 1 || stationChoice > numStations);
-
-                chargingStations[stationChoice - 1].addToPriorityQueue(user);
-                System.out.println(user.getUsername() + " has been added to the priority queue of station " + stationChoice + ".");
-            }
-
+        	
             try {
                 if (user.getUserType() == User.UserType.ADMINISTRATOR) {
+                	
                     System.out.print("Administrator " + user.getUsername() + ", do you want to clear all locations? (yes or no): ");
                     String clearChoice = scanner.next().toLowerCase();
 
                     if (clearChoice.equals("yes")) {
                         for (Station station : chargingStations) {
-
                             station.clearAllLocations();
-                            System.out.println("All locations cleared by " + user.getUsername());
+                            checkLogfile(systemLogger, scanner, user.getUsername());
                         }
-                    } else if (!clearChoice.equals("no")) {
+                    } else if (clearChoice.equals("no")) {
+                    	checkLogfile(systemLogger, scanner, user.getUsername());
                         throw new IllegalArgumentException("Invalid choice. Enter 'yes' or 'no'.");
                     }
                 }
@@ -209,6 +214,7 @@ public class Main extends Logfile {
                 System.out.println(e.getMessage());
             }
         }
+        
         int maxChargeLevel = 100;
         int minChargeLevelForWarning = 30;
 
@@ -235,5 +241,19 @@ public class Main extends Logfile {
         }
         SystemFunctionalityEndlog();
     }
+    private static void checkLogfile(Logger logger, Scanner scanner, String username) {
+        System.out.print("Administrator " + username + ", do you want to check the Logfile? (yes or no): ");
+        String checkLogfileChoice = scanner.next().toLowerCase();
+        
+        // Consume the newline character
+        scanner.nextLine();
 
+        if (checkLogfileChoice.equals("yes")) {
+            Logfile.displayLogfiles();
+            System.out.print("Enter the Logfile date to view (format: yyyy-MMM-dd): ");
+            String selectedDate = scanner.next();
+            logger.info("Administrator " + username + " checked the Logfile for " + selectedDate + ".");
+            Logfile.viewLogfile(selectedDate);
+        }
+    }
 }
