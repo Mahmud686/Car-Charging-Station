@@ -1,8 +1,9 @@
+package task5;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-
+import java.util.regex.Pattern;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.io.*;
@@ -73,19 +74,60 @@ public class Logfile {
 
     }
     
+    public static void displayLogfiles() {
+        File folder = new File(".");
+        File[] files = folder.listFiles((dir, name) -> name.endsWith(".log"));
+
+        System.out.println("Available Logfiles:");
+        for (File file : files) {
+            System.out.println(file.getName());
+        }
+    }
+    
+    public static void viewLogfile(String selectedDate) {
+        try {
+            File folder = new File(".");
+            File[] files = folder.listFiles((dir, name) ->
+                    name.matches("^.*-" + Pattern.quote(selectedDate) + "\\.txt$"));
+
+            if (files != null && files.length > 0) {
+                System.out.println("Logfiles for " + selectedDate + ":");
+
+                for (File file : files) {
+                    System.out.println("File: " + file.getName());
+                    displayFileContent(file);
+                }
+            } else {
+                System.out.println("No logfiles found for " + selectedDate);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void displayFileContent(File file) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            System.out.println(); 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public static void writeFile(String content, String fileName) {
         
 		try {
 			
-	         // Get the current date and time
             LocalDateTime currentDateTime = LocalDateTime.now();
             
 			DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
 			String formattedDate = currentDateTime.format(dateformatter);
 			
-            File file = new File(fileName + "-" + formattedDate);
+            File file = new File(fileName + "-" + formattedDate + ".txt");
 
-            // If the file doesn't exist, create a new one
             if (!file.exists()) {
                 file.createNewFile();
             }
