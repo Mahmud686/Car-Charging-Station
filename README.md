@@ -38,12 +38,12 @@ __Matriculation Number: 7219293__
 __HA2 Responsibilities:__
 
 __Matriculation Number: 7219089__ 
-1. Develop the Weather conditions and Energy sources configuration for the Capstone project and also the corresponding part in the Main.java file to align the scenario of the capstone project
-2. Develop some portion of Create multiuser access to the charging station – external users who could book timeslot and be part of the prioritized queue, administrators 3. Write the theory answers to Home task 2 (question no 2.3).
+1. Created metadata for capstone project 
+2. Write the theory answers to Home task 2 (question no 2.3)
 
 __Matriculation Number: 7216156__
-1. Develop the Station configuration for the Capstone project and also the corresponding part in the Main.java file to align the Locatio.java and Station.java file
-2. Develop some portion of Create multiuser access to the charging station – external users who could book timeslot and be part of the prioritized queue, administrators and metadata for your project 3. Write the theory answers to Home task 2 (question no 2.1).
+1. Created multi-user access to the charging station – external users who could book timeslot and be part of the prioritized queue, administrators.
+2. Write the theory answers to Home task 2 (question no 2.1).
 
 
 __Matriculation Number: 7216782__
