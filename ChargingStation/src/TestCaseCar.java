@@ -1,6 +1,3 @@
-package task5;
-
-
 
 import static org.junit.Assert.*;
 
