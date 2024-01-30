@@ -1,4 +1,4 @@
-package task5;
+
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
