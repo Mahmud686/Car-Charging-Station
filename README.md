@@ -117,5 +117,5 @@ __Matriculation Number: 7219293__
 
 __Matriculation Number: 7216782__
 
-1.	For Capstone project, created 3 test cases for battery level.
+1.	For Capstone project, automated the simulation and updated logs.
 
