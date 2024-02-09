@@ -75,3 +75,6 @@ Here's the metadata for CarChargingStation Java project:
     - Methods:
       - getUsername(): Returns the username of the user.
       - getUserType(): Returns the type of the user.
+11. Log FIle
+   - Adding logs files for each day for each charging station, for each energy source and for all system as whole
+   - Displaying the log Files to the administrator
